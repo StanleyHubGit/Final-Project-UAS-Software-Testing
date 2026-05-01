@@ -10,9 +10,8 @@ main = Blueprint('main', __name__)
 # =====================
 @main.route('/')
 def index():
-    if 'user' not in session:
+    if not session.get('user_id'):
         return redirect(url_for('main.login_page'))
-
     return render_template('index.html')
 
 @main.route('/login-page')
@@ -25,7 +24,7 @@ def register_page():
 
 @main.route('/logout')
 def logout():
-    session.pop('user', None)
+    session.pop('user_id', None)
     return redirect(url_for('main.login_page'))
 
 # =====================
@@ -78,7 +77,7 @@ def login():
         data = request.get_json()
         user = login_user(data.get('username'), data.get('password'))
 
-        session['user'] = user.username  # simpan login
+        session['user_id'] = user.id 
 
         return jsonify({"message": "Login success"})
     except Exception as e:

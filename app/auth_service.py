@@ -3,8 +3,11 @@ from . import db
 import re
 
 def register_user(username, password):
-    if not username or not password:
-        raise ValueError("Username and password required")
+    if not username or not username.strip():
+        raise ValueError("Username cannot be empty")
+
+    if not password or not password.strip():
+        raise ValueError("Password cannot be empty")
 
     # VALIDASI PASSWORD
     if len(password) < 8:
@@ -19,17 +22,28 @@ def register_user(username, password):
     if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
         raise ValueError("Password harus mengandung simbol")
 
-    if User.query.filter_by(username=username).first():
+    if User.query.filter_by(username=username.strip()).first():
         raise ValueError("User already exists")
 
-    user = User(username=username, password=password)
+    user = User(
+        username=username.strip(),
+        password=password
+    )
+
     db.session.add(user)
     db.session.commit()
 
     return user
 
+
 def login_user(username, password):
-    user = User.query.filter_by(username=username).first()
+    if not username or not username.strip():
+        raise ValueError("Username required")
+
+    if not password or not password.strip():
+        raise ValueError("Password required")
+
+    user = User.query.filter_by(username=username.strip()).first()
 
     if not user or user.password != password:
         raise ValueError("Invalid credentials")
