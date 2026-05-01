@@ -1,5 +1,5 @@
 import pytest
-from app import create_app
+from app import create_app, db
 
 @pytest.fixture
 def client():
@@ -9,10 +9,23 @@ def client():
 
     with app.app_context():
         db.create_all()
+        yield app.test_client()
+        db.session.remove()
+        db.drop_all()
 
     return app.test_client()
 
 def test_home_page(client):
+    client.post('/register', json={
+        "username": "user_test",
+        "password": "Password1!"
+    })
+
+    client.post('/login', json={
+        "username": "user_test",
+        "password": "Password1!"
+    })
+
     res = client.get('/')
     assert res.status_code == 200
 
