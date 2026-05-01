@@ -1,7 +1,7 @@
 # 🚀 Task Management System
 
 ![CI](https://github.com/StanleyHubGit/Final-Project-UAS-Software-Testing/actions/workflows/ci.yml/badge.svg)
-![Coverage](https://img.shields.io/badge/coverage-90%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.10-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
