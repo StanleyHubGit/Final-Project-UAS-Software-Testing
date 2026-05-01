@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/python-3.10-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-Aplikasi web sederhana berbasis **Flask** untuk mengelola task (CRUD) dengan fitur autentikasi, pengujian otomatis, dan CI/CD menggunakan GitHub Actions.
+Aplikasi web sederhana berbasis **Flask** untuk mengelola task (CRUD) dengan fitur autentikasi, automated testing, dan CI/CD menggunakan GitHub Actions.
 
 ---
 
@@ -13,18 +13,18 @@ Aplikasi web sederhana berbasis **Flask** untuk mengelola task (CRUD) dengan fit
 
 Task Management System memungkinkan pengguna untuk:
 
-- Membuat task
-- Melihat daftar task
-- Menandai task selesai
-- Menghapus task
+* Membuat task
+* Melihat daftar task
+* Menandai task sebagai selesai
+* Menghapus task
 
-Fitur tambahan:
+### ✨ Fitur Tambahan
 
-- 🔐 Login & Register user
-- ✅ Validasi input (termasuk password kuat)
-- 💾 Penyimpanan data menggunakan SQLite
-- 🧪 Automated testing (unit & integration)
-- 🔄 CI/CD dengan GitHub Actions
+* 🔐 Login & Register user
+* ✅ Validasi input (password kuat)
+* 💾 Penyimpanan data menggunakan SQLite
+* 🧪 Automated testing (unit & integration)
+* 🔄 CI/CD dengan GitHub Actions
 
 ---
 
@@ -80,11 +80,13 @@ python -m venv venv
 Aktifkan:
 
 **Windows**
+
 ```bash
 venv\Scripts\activate
 ```
 
 **Mac/Linux**
+
 ```bash
 source venv/bin/activate
 ```
@@ -116,14 +118,14 @@ http://127.0.0.1:5000
 ## 🧪 Menjalankan Testing
 
 ```bash
-pytest --cov=app
+pytest --cov=app --cov-report=term-missing
 ```
 
-Hasil yang diharapkan:
+### ✅ Hasil yang Diharapkan
 
-- ✅ Unit Test
-- ✅ Integration Test
-- ✅ Coverage ≥ 90%
+* Unit Test ✔️
+* Integration Test ✔️
+* Coverage ≥ 90%
 
 ---
 
@@ -133,16 +135,16 @@ Project ini menggunakan **GitHub Actions**.
 
 Pipeline otomatis berjalan saat:
 
-- Push ke repository
-- Pull request
+* Push ke repository
+* Pull request
 
-### Pipeline melakukan:
+### ⚙️ Pipeline akan:
 
-- Install dependencies
-- Menjalankan semua test
-- Generate test coverage
+* Install dependencies
+* Menjalankan semua test
+* Menghitung test coverage
 
-File konfigurasi:
+📁 File konfigurasi:
 
 ```
 .github/workflows/ci.yml
@@ -152,54 +154,57 @@ File konfigurasi:
 
 ## 📊 Test Coverage
 
-- 🎯 Target minimal: **60%**
-- ✅ Hasil saat ini: **~90%**
-
-Coverage dihitung menggunakan:
-
-```
-pytest-cov
-```
+* 🎯 Target minimal: **60%**
+* ✅ Coverage saat ini: **100%**
 
 ---
 
 ## 🎯 Fitur Utama
 
-- ✔️ CRUD Task
-- ✔️ Login & Register
-- ✔️ Validasi password (minimal 8 karakter, angka & simbol)
-- ✔️ Database SQLite
-- ✔️ Automated Testing
-- ✔️ CI/CD dengan GitHub Actions
+* ✔️ CRUD Task
+* ✔️ Login & Register
+* ✔️ Validasi password (8+ karakter, angka & simbol)
+* ✔️ Database SQLite
+* ✔️ Automated Testing
+* ✔️ CI/CD dengan GitHub Actions
 
 ---
 
 ## 🧰 Teknologi yang Digunakan
 
-| Bagian      | Teknologi |
-|------------|----------|
-| Backend     | Python 3.10, Flask |
-| Database    | SQLite |
-| Testing     | Pytest, pytest-cov |
-| CI/CD       | GitHub Actions |
-| Frontend    | HTML, Bootstrap |
+| Bagian   | Teknologi          |
+| -------- | ------------------ |
+| Backend  | Python 3.10, Flask |
+| Database | SQLite             |
+| Testing  | Pytest, pytest-cov |
+| CI/CD    | GitHub Actions     |
+| Frontend | HTML, Bootstrap    |
 
 ---
 
 ## 🔐 Validasi Keamanan
 
-- Password minimal:
-  - 8 karakter
-  - Mengandung angka
-  - Mengandung simbol
-- Username harus unik
-- Error handling untuk semua endpoint
+* Password minimal:
+
+  * 8 karakter
+  * Mengandung huruf
+  * Mengandung angka
+  * Mengandung simbol
+* Username harus unik
+* Error handling pada setiap endpoint
 
 ---
 
 ## 👨‍💻 Author
 
-Nama: **Stanley Lim**  
+Nama: **Stanley Lim**
 Mata Kuliah: **Software Testing**
 
 ---
+
+## 🎯 Status Project
+
+✅ Final Project
+✅ CI/CD Active
+✅ Tested (Unit + Integration)
+✅ Production Ready (Basic Level)
