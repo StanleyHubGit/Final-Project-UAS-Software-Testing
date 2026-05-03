@@ -47,3 +47,22 @@ def delete_task(task_id):
     db.session.commit()
 
     return {"id": task.id}
+
+
+def update_task(task_id, new_title):
+    if not new_title or not new_title.strip():
+        raise ValueError("Title cannot be empty")
+
+    task = Task.query.get(task_id)
+
+    if not task:
+        raise ValueError("Task not found")
+
+    task.title = new_title
+    db.session.commit()
+
+    return {
+        "id": task.id,
+        "title": task.title,
+        "completed": task.completed
+    }

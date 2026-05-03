@@ -128,6 +128,36 @@ def test_delete_task_invalid_id(client):
     assert res.status_code == 404
 
 
+def test_update_task_success(client):
+    res = client.post('/tasks', json={"title": "Old Task"})
+    task_id = res.json["id"]
+
+    res2 = client.patch(f'/tasks/{task_id}', json={"title": "New Task"})
+    assert res2.status_code == 200
+    assert res2.json["title"] == "New Task"
+
+
+def test_update_task_not_found(client):
+    res = client.patch('/tasks/999', json={"title": "New"})
+    assert res.status_code == 400
+
+
+def test_update_task_empty_title(client):
+    res = client.post('/tasks', json={"title": "Task"})
+    task_id = res.json["id"]
+
+    res2 = client.patch(f'/tasks/{task_id}', json={"title": ""})
+    assert res2.status_code == 400
+
+
+def test_update_task_null_json(client):
+    res = client.post('/tasks', json={"title": "Task"})
+    task_id = res.json["id"]
+
+    res2 = client.patch(f'/tasks/{task_id}', json=None)
+    assert res2.status_code == 400
+
+
 def test_logout(client):
     with client.session_transaction() as sess:
         sess['user_id'] = 1

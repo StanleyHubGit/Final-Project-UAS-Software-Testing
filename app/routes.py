@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, render_template
-from .services import add_task, get_tasks, complete_task, delete_task
+from .services import add_task, get_tasks, complete_task, delete_task, update_task
 from .auth_service import register_user, login_user
 from flask import session, redirect, url_for
 
@@ -58,6 +58,15 @@ def delete(id):
         return jsonify(task)
     except Exception as e:
         return jsonify({"error": str(e)}), 404
+    
+@main.route('/tasks/<int:id>', methods=['PATCH'])
+def edit_task(id):
+    try:
+        data = request.get_json()
+        task = update_task(id, data.get('title'))
+        return jsonify(task)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 # =====================
 # AUTH API

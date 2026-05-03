@@ -6,19 +6,21 @@
 </head>
 <body class="container mt-5">
 
-<div class="d-flex justify-content-between align-items-center mb-4"></div>
+<h2 class="mb-4">Task Manager</h2>
 
-<h2>Task Manager</h2>
+<div class="d-flex gap-2">
+    <input id="taskInput" class="form-control" placeholder="Enter task">
+    <button onclick="addTask()" class="btn btn-primary">Add</button>
+    <button onclick="logout()" class="btn btn-danger">Logout</button>
+</div>
 
-<input id="taskInput" class="form-control" placeholder="Enter task">
-<button onclick="addTask()" class="btn btn-primary mt-2">Add Task</button>
-<button onclick="logout()" class="btn btn-danger mt-2">Logout</button>
-
-<ul id="taskList" class="list-group mt-3"></ul>
+<ul id="taskList" class="list-group mt-4"></ul>
 
 <script>
 async function addTask() {
     const title = document.getElementById('taskInput').value;
+
+    if (!title.trim()) return alert("Task cannot be empty");
 
     await fetch('/tasks', {
         method: 'POST',
@@ -40,6 +42,36 @@ async function deleteTask(id) {
     loadTasks();
 }
 
+async function updateTask(id, newTitle) {
+    await fetch(`/tasks/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: newTitle })
+    });
+
+    loadTasks();
+}
+
+function enableEdit(id, currentTitle) {
+    const li = document.getElementById(`task-${id}`);
+
+    li.innerHTML = `
+        <input id="edit-${id}" class="form-control me-2" value="${currentTitle}">
+        <div class="d-flex gap-1">
+            <button class="btn btn-success btn-sm" onclick="saveEdit(${id})">Save</button>
+            <button class="btn btn-secondary btn-sm" onclick="loadTasks()">Cancel</button>
+        </div>
+    `;
+}
+
+function saveEdit(id) {
+    const newTitle = document.getElementById(`edit-${id}`).value;
+
+    if (!newTitle.trim()) return alert("Task cannot be empty");
+
+    updateTask(id, newTitle);
+}
+
 async function loadTasks() {
     const res = await fetch('/tasks');
     const tasks = await res.json();
@@ -49,6 +81,7 @@ async function loadTasks() {
 
     tasks.forEach(t => {
         const li = document.createElement('li');
+        li.id = `task-${t.id}`;
         li.className = 'list-group-item d-flex justify-content-between align-items-center';
 
         li.innerHTML = `
@@ -56,7 +89,8 @@ async function loadTasks() {
                 ${t.title}
             </span>
 
-            <div>
+            <div class="d-flex gap-1">
+                <button class="btn btn-warning btn-sm" onclick="enableEdit(${t.id}, '${t.title}')">✏️</button>
                 <button class="btn btn-success btn-sm" onclick="completeTask(${t.id})">✔</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteTask(${t.id})">✖</button>
             </div>
