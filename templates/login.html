@@ -22,20 +22,22 @@
 
 <script>
 async function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
     const res = await fetch('/login', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            username: username.value,
-            password: password.value
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
     });
 
-    const data = await res.json();
-    message.innerText = data.message || data.error;
-
     if (res.status === 200) {
+        // SIMPAN USERNAME
+        localStorage.setItem("username", username);
+
         window.location.href = "/";
+    } else {
+        alert("Login gagal!");
     }
 }
 

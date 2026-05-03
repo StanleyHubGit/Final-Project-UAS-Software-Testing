@@ -1,5 +1,6 @@
 import pytest
 from app import create_app, db
+from app.models import User
 
 @pytest.fixture
 def client():
@@ -48,11 +49,25 @@ def test_home_requires_login(client):
 
 
 def test_home_page_logged_in(client):
+    with client.application.app_context():
+        user = User(username="testuser", password="Password1!")
+        db.session.add(user)
+        db.session.commit()
+        user_id = user.id
+
     with client.session_transaction() as sess:
-        sess['user_id'] = 1
+        sess['user_id'] = user_id
 
     res = client.get('/')
     assert res.status_code == 200
+
+
+def test_home_user_not_found(client):
+    with client.session_transaction() as sess:
+        sess['user_id'] = 999  # user tidak ada
+
+    res = client.get('/')
+    assert res.status_code == 302
 
 
 def test_home_redirect_if_not_logged_in(client):

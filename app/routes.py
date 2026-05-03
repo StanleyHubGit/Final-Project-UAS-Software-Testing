@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, render_template
 from .services import add_task, get_tasks, complete_task, delete_task, update_task
 from .auth_service import register_user, login_user
 from flask import session, redirect, url_for
+from .models import User
 
 main = Blueprint('main', __name__)
 
@@ -10,9 +11,19 @@ main = Blueprint('main', __name__)
 # =====================
 @main.route('/')
 def index():
-    if not session.get('user_id'):
+    user_id = session.get('user_id')
+
+    if not user_id:
         return redirect(url_for('main.login_page'))
-    return render_template('index.html')
+
+    from .models import User
+    user = User.query.get(user_id)
+
+    if not user:
+        session.pop('user_id', None)
+        return redirect(url_for('main.login_page'))
+
+    return render_template('index.html', username=user.username)
 
 @main.route('/login-page')
 def login_page():
