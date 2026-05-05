@@ -109,7 +109,7 @@ def test_add_task_empty_title(app_context):
 
 def test_add_task_whitespace_title(app_context):
     with pytest.raises(ValueError):
-        add_task("   ")  # hanya spasi
+        add_task("   ")  # hanya 
 
 
 # =====================

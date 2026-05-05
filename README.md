@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/python-3.10-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-Aplikasi web sederhana berbasis **Flask** untuk mengelola task (CRUD) dengan fitur autentikasi, automated testing, dan CI/CD menggunakan GitHub Actions.
+Aplikasi web sederhana berbasis **Flask** untuk mengelola task (CRUD) dengan fitur autentikasi, automated testing, dan CI/CD menggunakan GitHub Actions...
 
 ---
 
