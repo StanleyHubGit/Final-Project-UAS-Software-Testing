@@ -109,15 +109,18 @@ def test_add_task_empty_title(app_context):
 
 def test_add_task_whitespace_title(app_context):
     with pytest.raises(ValueError):
-        add_task("   ")  # hanya 
+        add_task("   ")  # hanya spasi
 
 
 # =====================
-# GET TASKS EDGE CASE
+# GET TASKS AFTER DELETE
 # =====================
-def test_get_tasks_empty(app_context):
-    tasks = get_tasks()
-    assert tasks == []  # harus kosong kalau belum ada data
+def test_get_tasks_returns_empty_after_delete(app_context):
+    task = add_task("Task 1")          # tambah task
+    delete_task(task["id"])            # hapus task
+
+    tasks = get_tasks()                # ambil semua task
+    assert len(tasks) == 0             # harus kosong setelah dihapus
 
 
 # =====================
